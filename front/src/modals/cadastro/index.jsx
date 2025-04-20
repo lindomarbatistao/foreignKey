@@ -49,11 +49,11 @@ const ModalFuncionarios = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const novoProfessor = { ni, nome, email, cel, ocup };
+        const novoFuncionario = {sn, funcionario, email, telefone, gestor};
         if (funcionarioSelecionado) {
-            atualizar({ ...funcionarioSelecionado, ...novoProfessor });
+            atualizar({ ...funcionarioSelecionado, ...novoFuncionario });
         } else {
-            criar(novoProfessor);
+            cadastrarFuncionario(novoFuncionario);
         }
     };
 
@@ -82,7 +82,7 @@ const ModalFuncionarios = ({
         <div className="modal-overlay">
             <div className="modal-container">
                 <button className="close-button" onClick={onClose}>X</button>
-                <h2>{funcionarioSelecionado ? "Editar Professor" : "Cadastrar Professor"}</h2>
+                <h2>{funcionarioSelecionado ? "Editar Funcionário" : "Cadastrar Funcionário"}</h2>
                 <div className="body_modal">
                     <div className="caixa1">
                         <form onSubmit={handleSubmit}>
@@ -90,52 +90,51 @@ const ModalFuncionarios = ({
                                 className="sn_modal"
                                 value={sn}
                                 onChange={(e) => setSn(e.target.value)}
-                                placeholder="sn"
+                                placeholder=" SN"
                             />
                             <input
                                 className="funcionario_modal"
                                 value={funcionario}
                                 onChange={(e) => setFuncionario(e.target.value)}
-                                placeholder="funcionario"
+                                placeholder=" Funcionario"
                             />
                             <input
                                 className="email_modal"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Email"
+                                placeholder=" Email"
                             />
                             <input
                                 className="telefone_modal"
                                 value={telefone}
                                 onChange={(e) => setTelefone(e.target.value)}
-                                placeholder="Telefone"
+                                placeholder=" Telefone"
                             />
-                            <input
-                                className="gestor_modal"
-                                value={gestor}
-                                onChange={(e) => setGestor(e.target.value)}
-                                placeholder="gestor"
-                            />
+                            <div className="gest">
+                                <input
+                                    className="gestor_modal"
+                                    value={gestor}
+                                    onChange={(e) => setGestor(e.target.value)}
+                                    placeholder=" Gestor"
+                                />
 
-                            <select value={selecionado} onChange={(event) => { setSelecionado(event.target.value) }}>
-                                <option value="">-- Escolha um gestor --</option>
-                                {gestores.map((gestor) => (
-                                    <option key={gestor.id} value={gestor.id}>
-                                        {gestor.gestor}
-                                    </option>
-                                ))}
-                            </select>
+                                <select value={selecionado} className="caixa2" onChange={(event) => { setSelecionado(event.target.value) }}>
+                                    <option value="">-- Escolha um gestor --</option>
+                                    {gestores.map((gestor) => (
+                                        <option key={gestor.id} value={gestor.id}>
+                                            {gestor.gestor}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                            {selecionado && (
+
+                            
+                            {/* {selecionado && (
                                 <p>Gestor selecionado: <strong>{gestores.find(g => g.id == selecionado)?.gestor}</strong></p>
-                            )}
-                            <button type="submit">{funcionarioSelecionado ? "Atualizar" : "Salvar"}</button>
+                            )} */}
+                            <button type="submit" className="btn_modal">{funcionarioSelecionado ? "Atualizar" : "Salvar"}</button>
                         </form>
-                    </div>
-                    <div className="caixa2">
-                        <div className="image">
-
-                        </div>
                     </div>
                 </div>
             </div>
