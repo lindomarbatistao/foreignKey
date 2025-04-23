@@ -8,14 +8,14 @@ class GestorSerializer(serializers.ModelSerializer):
 
 class CadastroFuncionarioSerializer(serializers.ModelSerializer):
     gestor = GestorSerializer(read_only=True)
-    # gestor_id = serializers.PrimaryKeyRelatedField(
-    #     queryset=Gestor.objects.all(), source='gestor', write_only=True
-    # )
+    gestor_id = serializers.PrimaryKeyRelatedField(
+        queryset=Gestor.objects.all(), source='gestor', write_only=True
+    )
 
     class Meta:
         model = CadastroFuncionario
-        # fields = ['id', 'sn', 'funcionario', 'email', 'telefone', 'gestor', 'gestor_id']
-        fields = ['id', 'sn', 'funcionario', 'email', 'telefone', 'gestor']
+        fields = ['id', 'sn', 'funcionario', 'email', 'telefone', 'gestor', 'gestor_id']
+
 
 
 

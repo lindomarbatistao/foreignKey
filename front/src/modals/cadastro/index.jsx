@@ -16,7 +16,6 @@ const ModalFuncionarios = ({
     const [telefone, setTelefone] = useState(funcionarioSelecionado?.telefone || "")
     const [gestor, setGestor] = useState(funcionarioSelecionado?.gestor || "")
     const [gestores, setGestores] = useState([]);
-    const [selecionado, setSelecionado] = useState('');
 
     useEffect(() => {
         if (funcionarioSelecionado) {
@@ -25,7 +24,7 @@ const ModalFuncionarios = ({
             setFuncionario(funcionarioSelecionado.funcionario)
             setEmail(funcionarioSelecionado.email)
             setTelefone(funcionarioSelecionado.telefone)
-            setGestor(funcionarioSelecionado.gestor)
+            setGestor(funcionarioSelecionado.gestor?.id)
         } else {
             setSn("")
             setFuncionario("")
@@ -51,7 +50,7 @@ const ModalFuncionarios = ({
         e.preventDefault();
         const novoFuncionario = {sn, funcionario, email, telefone, gestor};
         if (funcionarioSelecionado) {
-            atualizar({ ...funcionarioSelecionado, ...novoFuncionario });
+            atualizarFuncionario({ ...funcionarioSelecionado, ...novoFuncionario });
         } else {
             cadastrarFuncionario(novoFuncionario);
         }
@@ -65,18 +64,34 @@ const ModalFuncionarios = ({
                     funcionario: funcionario,
                     email: email,
                     telefone: telefone,
-                    gestor: gestor
+                    gestor_id: gestor
                 }
             )
             console.log("Funcionário cadastrado com sucesso!");
+            onClose(true)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const atualizarFuncionario = async (funcionarioSelecionado) => {
+        try {
+            await axios.put(`http://127.0.0.1:8000/api/funcionario/${funcionarioSelecionado.id}`,
+                {
+                    sn: sn,
+                    funcionario: funcionario,
+                    email: email,
+                    telefone: telefone,
+                    gestor_id: gestor
+                }
+            )
+            console.log("Funcionário cadastrado com sucesso!");
+            onClose(true)
         } catch (error) {
             console.log(error);
 
         }
     }
-
-
-
 
     return (
         <div className="modal-overlay">
@@ -118,21 +133,17 @@ const ModalFuncionarios = ({
                                     placeholder=" Gestor"
                                 />
 
-                                <select value={selecionado} className="caixa2" onChange={(event) => { setSelecionado(event.target.value) }}>
+                                <select value={gestor} className="caixa2" onChange={(event) => { setGestor(event.target.value) }}>
                                     <option value="">-- Escolha um gestor --</option>
                                     {gestores.map((gestor) => (
                                         <option key={gestor.id} value={gestor.id}>
                                             {gestor.gestor}
                                         </option>
                                     ))}
+                                    {console.log("Gestor: ", gestor)}
                                 </select>
                             </div>
 
-
-                            
-                            {/* {selecionado && (
-                                <p>Gestor selecionado: <strong>{gestores.find(g => g.id == selecionado)?.gestor}</strong></p>
-                            )} */}
                             <button type="submit" className="btn_modal">{funcionarioSelecionado ? "Atualizar" : "Salvar"}</button>
                         </form>
                     </div>

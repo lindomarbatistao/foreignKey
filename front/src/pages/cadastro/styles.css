@@ -2,17 +2,30 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: aqua;
-    width: 100%;
-    height:100px;
+    justify-content: center;
+    /* background-color: aqua; */
+    width: 100vw;
+    height:500px;
+}
+
+.body_s{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(204, 184, 184);
+    width: 600px;
 }
 
 .bloco_s{
     display: flex;
     flex-direction: row;
-    background-color: rgb(71, 173, 51);
+    justify-content: space-around;
+    background-color: rgb(233, 233, 233);
     width: 100%;
-    height: 50px;
+    height: 500px;
+}
+
+.bloco_s ul{
+    list-style-type: none;
 }
 
 .title_s{

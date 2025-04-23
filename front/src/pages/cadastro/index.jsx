@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ModalFuncionarios from "../../modals/cadastro";
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 import axios from 'axios'
 import './styles.css'
 
@@ -19,38 +19,39 @@ export default function Cadastro() {
                 console.error("Erro ao buscar funcionários:", error);
             }
         }
-
-        
         buscarFuncionarios()
-    }, [])
-
-
+    }, [modalOpen])
 
     return (
         <div className="container_s">
-            <div className="title_s">
-              <h2>Lista de Funcionários</h2> 
-              <FaPlus className="btn_add" onClick={()=>setModalOpen(true)}/> 
-            </div>
-            
+            <div className="body_s">
+                <div className="title_s">
+                    <h2>Lista de Funcionários</h2>
+                    <FaPlus className="btn_add" onClick={() => {setFuncionarioSelecionado(null), setModalOpen(true)}} />
+                </div>
 
-            <div className="bloco_s">
-                <ul>
-                    {dados.map((item) => (
-                        <li key={item.id}>
-                            {console.log(item)}
-                            {item.funcionario} - {item.email} - {item.telefone} - {item.gestor.id}
-                        </li>
-                    ))}
-                </ul>
 
-                
+                <div className="bloco_s">
+                    <ul>
+                        {dados.map((item) => (
+                            <li key={item.id}>
+                                {console.log(item)}
+                                <FaEdit onClick={()=>{setFuncionarioSelecionado(item), setModalOpen(true)}}/>
+                                <FaTrash />
+                                {item.funcionario} - {item.email} - {item.telefone} - {item.gestor.id}
+                            </li>
+                        ))}
+                    </ul>
+
+
+                </div>
             </div>
+
             <ModalFuncionarios
-                    isOpen={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    funcionarioSelecionado={funcionarioSelecionado}
-                />
+                isOpen={modalOpen}
+                onClose={() => setModalOpen(false)}
+                funcionarioSelecionado={funcionarioSelecionado}
+            />
         </div>
     )
 }

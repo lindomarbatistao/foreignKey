@@ -111,8 +111,9 @@
 }
 
 .caixa2{
-    background-color: rgb(196, 183, 185);
+    background-color: rgb(199, 199, 199);
     height: 30px;
+    border-radius: 5px;
 }
 
 .btn_modal{
